@@ -16,13 +16,41 @@
             left: 1%;
             color: deepskyblue;
         }
+        footer > a, a:visited {
+            color: white;
+        }
+        #loadBar {
+            position: fixed;
+            width: 50%;
+            top: 47.5%;
+            height: 25px;
+            left: 25%;
+            right: 25%;
+            /* background-color: white;
+            opacity: 0.5; */
+            border: 1px solid white;
+            border-radius: 10px;
+            text-align: center;
+            /* color: white; */
+        }
+        #loadBar > p {
+            position: relative;
+            margin-top: 4px;
+            color: white;
+        }
+        #loading {
+            position: absolute;
+            opacity: 1;
+            border-radius: 10px;
+            width: 0;
+            height: 25px;
+            background-color: deeppink;
+            /* border: 1px solid white; */
+        }
         #miniHUD {
             position: fixed;
             top: 5%;
             left: 5%;
-        }
-        footer > a, a:visited {
-            color: white;
         }
     </style>
 </head>
@@ -30,6 +58,10 @@
 
     <div id="game">
         <div id="miniHUD"></div>
+        <div id="loadBar">
+            <div id="loading"></div>
+            <p>Loading assets...</p>
+        </div>
     </div>
 
     <footer>

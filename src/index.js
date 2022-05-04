@@ -23,10 +23,19 @@ const material = new THREE.MeshNormalMaterial()
 const loader = new STLLoader()
 const model = './models/stl/3DBenchy.stl'
 const loadStart = new Date()
+const loadBar = document.querySelector('#loadBar')
+const loading = document.querySelector('#loading')
+const endLoading = _ => {
+    loading.style.width = loadBar.clientWidth - 1
+    loadBar.querySelector('p').innerText = `Loading done in ${(new Date() - loadStart) / 1000} seconds !`
+    loadBar.style.transition = 'visibility 1.2s linear, opacity 1.2s linear'
+    loadBar.style.opacity = 0
+    loadBar.style.visibility = 'hidden'
+}
 loader.load(
     model,
     function (geometry) {
-        console.log(`Loaded ${model} in ${(new Date() - loadStart) / 1000} seconds`)
+        endLoading()
         const mesh = new THREE.Mesh(geometry, material)
         const box = new THREE.Box3().setFromObject(mesh)
         let boxSize = new THREE.Vector3()
@@ -37,7 +46,8 @@ loader.load(
         scene.add(mesh)
     },
     (xhr) => {
-        // console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
+        console.log((xhr.loaded / xhr.total) * 100 + '% loaded')
+        loading.style.width = `${loadBar.clientWidth * (xhr.loaded / xhr.total)}px`
     },
     (error) => {
         console.log(error)
@@ -46,7 +56,7 @@ loader.load(
 
 const renderer = new THREE.WebGLRenderer( { antialias: true } )
 renderer.setAnimationLoop( animation )
-document.body.appendChild( renderer.domElement )
+document.querySelector('#game').appendChild( renderer.domElement )
 
 const controls = new OrbitControls( camera, renderer.domElement )
 
